@@ -1,12 +1,12 @@
-# Coffee Quality Challenge 2026
+# Conexão Café
 
-Projeto desenvolvido em Vue 3 para registrar avaliações de cafés e mostrar um ranking simples da atividade.
+Sistema para avaliação sensorial de cafés especiais inspirado na metodologia SCA.
 
 ## Aluno
 
-Bruna Siebert
+Igor
 
-## Disciplina
+## Turma
 
 Desenvolvimento Front-end
 
@@ -27,24 +27,33 @@ npm run dev
 
 ## Funcionalidades implementadas
 
-- Página inicial com informações do campeonato
-- Página de avaliações com formulário e lista de cafés
-- Ranking com as notas organizadas
+- Home com indicadores do campeonato
+- Cadastro de avaliações com cálculo automático da média
+- Listagem dos cafés avaliados
+- Ranking ordenado por nota
 - Página de detalhes de cada café
-- Página de erro para rotas não encontradas
-- Armazenamento dos dados no navegador
+- Página 404 para rotas inexistentes
 
 ## Conceitos Vue.js aplicados
 
-| Conceito    | Onde foi utilizado                                   |
-| ----------- | ---------------------------------------------------- |
-| Components  | CoffeeCard, RatingForm e LeaderboardTable            |
-| Props       | Componentes recebem dados via props                  |
-| v-for       | Listagem dos cafés e ranking                         |
-| v-if        | Mensagens condicionais e estados vazios              |
-| Reatividade | Atualização automática das avaliações                |
-| Vue Router  | Navegação entre Home, Avaliações, Ranking e Detalhes |
+| Conceito    | Onde foi utilizado                         |
+| ----------- | ------------------------------------------ |
+| v-for       | Listagem dos cafés e ranking               |
+| v-if        | Mensagens condicionais e estados vazios    |
+| Props       | CoffeeCard e LeaderboardTable recebem dados |
+| Router      | Navegação entre Home, Avaliações, Ranking  |
+| Reatividade | Atualização automática da média e dados    |
 
-## Observação
+## Prints das telas
 
-As telas podem ser visualizadas ao executar o projeto localmente.
+### Home
+![Home](./prints/home.png)
+
+### Avaliações
+![Avaliações](./prints/avaliacoes.png)
+
+### Ranking
+![Ranking](./prints/ranking.png)
+
+### Detalhes do Café
+![Detalhes](./prints/detalhes.png)
