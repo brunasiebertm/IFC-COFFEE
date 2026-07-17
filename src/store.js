@@ -1,11 +1,11 @@
 import { computed, ref } from 'vue'
 
-const STORAGE_KEY = 'coffee-quality-challenge-2026'
+const chaveStorage = 'conexao-cafe-avaliacoes'
 
 const dadosIniciais = [
   {
     id: 1,
-    nome: 'Café Bourbon Amarelo',
+    nome: 'Bourbon Amarelo',
     produtor: 'Sítio Primavera',
     aroma: 9,
     sabor: 8.5,
@@ -19,7 +19,91 @@ const dadosIniciais = [
   },
   {
     id: 2,
-    nome: 'Café Geisha',
+    nome: 'Geisha',
+    produtor: 'Fazenda Vista Alegre',
+    aroma: 9.5,
+    sabor: 9.8,
+    acidez: 9,
+    corpo: 9,
+    finalizacao: 9.3,
+    media: 9.3,
+    observacoes: 'Perfil floral e excelente final longo.',
+    avaliador: 'Bruna',
+    data: '10/07/2026',
+  },
+  {
+    id: 3,
+    nome: 'Geisha',
+    produtor: 'Fazenda Vista Alegre',
+    aroma: 9.5,
+    sabor: 9.8,
+    acidez: 9,
+    corpo: 9,
+    finalizacao: 9.3,
+    media: 9.3,
+    observacoes: 'Perfil floral e excelente final longo.',
+    avaliador: 'Bruna',
+    data: '10/07/2026',
+  },
+  {
+    id: 4,
+    nome: 'Geisha',
+    produtor: 'Fazenda Vista Alegre',
+    aroma: 9.5,
+    sabor: 9.8,
+    acidez: 9,
+    corpo: 9,
+    finalizacao: 9.3,
+    media: 9.3,
+    observacoes: 'Perfil floral e excelente final longo.',
+    avaliador: 'Bruna',
+    data: '10/07/2026',
+  },
+  {
+    id: 5,
+    nome: 'Geisha',
+    produtor: 'Fazenda Vista Alegre',
+    aroma: 9.5,
+    sabor: 9.8,
+    acidez: 9,
+    corpo: 9,
+    finalizacao: 9.3,
+    media: 9.3,
+    observacoes: 'Perfil floral e excelente final longo.',
+    avaliador: 'Bruna',
+    data: '10/07/2026',
+  },
+  {
+    id: 6,
+    nome: 'Geisha',
+    produtor: 'Fazenda Vista Alegre',
+    aroma: 9.5,
+    sabor: 9.8,
+    acidez: 9,
+    corpo: 9,
+    finalizacao: 9.3,
+    media: 9.3,
+    observacoes: 'Perfil floral e excelente final longo.',
+    avaliador: 'Bruna',
+    data: '10/07/2026',
+  },
+  {
+    id: 7,
+    nome: 'Geisha',
+    produtor: 'Fazenda Vista Alegre',
+    aroma: 9.5,
+    sabor: 9.8,
+    acidez: 9,
+    corpo: 9,
+    finalizacao: 9.3,
+    media: 9.3,
+    observacoes: 'Perfil floral e excelente final longo.',
+    avaliador: 'Bruna',
+    data: '10/07/2026',
+  },
+  {
+    id: 8,
+    nome: 'Geisha',
     produtor: 'Fazenda Vista Alegre',
     aroma: 9.5,
     sabor: 9.8,
@@ -33,20 +117,15 @@ const dadosIniciais = [
   },
 ]
 
-const carregarAvaliacoes = () => {
-  if (typeof window === 'undefined') {
-    return dadosIniciais
-  }
+function carregarAvaliacoes() {
+  if (typeof window === 'undefined') return dadosIniciais
 
-  const armazenado = window.localStorage.getItem(STORAGE_KEY)
-
-  if (!armazenado) {
-    return dadosIniciais
-  }
+  const salvo = window.localStorage.getItem(chaveStorage)
+  if (!salvo) return dadosIniciais
 
   try {
-    const parsed = JSON.parse(armazenado)
-    return Array.isArray(parsed) ? parsed : dadosIniciais
+    const convertido = JSON.parse(salvo)
+    return Array.isArray(convertido) ? convertido : dadosIniciais
   } catch {
     return dadosIniciais
   }
@@ -54,60 +133,70 @@ const carregarAvaliacoes = () => {
 
 export const avaliacoes = ref(carregarAvaliacoes())
 
-const persistirAvaliacoes = () => {
+function salvarNoStorage() {
   if (typeof window !== 'undefined') {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(avaliacoes.value))
+    window.localStorage.setItem(chaveStorage, JSON.stringify(avaliacoes.value))
   }
 }
 
-export const numeroDeAvaliacoes = computed(() => avaliacoes.value.length)
+export const totalAvaliacoes = computed(() => avaliacoes.value.length)
+
 export const melhorNota = computed(() => {
-  if (avaliacoes.value.length === 0) {
-    return null
+  if (avaliacoes.value.length === 0) return null
+  let maior = 0
+  for (let i = 0; i < avaliacoes.value.length; i++) {
+    if (avaliacoes.value[i].media > maior) {
+      maior = avaliacoes.value[i].media
+    }
   }
-
-  return Math.max(...avaliacoes.value.map((cafe) => cafe.media))
+  return maior
 })
-export const ultimaAvaliacao = computed(() => {
-  if (avaliacoes.value.length === 0) {
-    return null
-  }
 
+export const ultimaAvaliacao = computed(() => {
+  if (avaliacoes.value.length === 0) return null
   return avaliacoes.value[0]
 })
 
-export function adicionarAvaliacao(novoCafe) {
-  if (!novoCafe?.nome?.trim() || !novoCafe?.produtor?.trim()) {
+export function adicionarAvaliacao(nova) {
+  if (!nova.nome || !nova.produtor) {
     return { success: false, message: 'Nome do café e produtor são obrigatórios.' }
   }
 
-  const notas = ['aroma', 'sabor', 'acidez', 'corpo', 'finalizacao'].map((chave) =>
-    Number(novoCafe[chave]),
-  )
-
-  if (notas.some((nota) => Number.isNaN(nota) || nota < 0 || nota > 10)) {
-    return { success: false, message: 'Todas as notas devem estar entre 0 e 10.' }
+  const notas = []
+  for (let i = 0; i < 5; i++) {
+    const chaves = ['aroma', 'sabor', 'acidez', 'corpo', 'finalizacao']
+    notas.push(Number(nova[chaves[i]]))
   }
 
-  const media = Number((notas.reduce((soma, nota) => soma + nota, 0) / notas.length).toFixed(1))
+  for (let i = 0; i < notas.length; i++) {
+    if (isNaN(notas[i]) || notas[i] < 0 || notas[i] > 10) {
+      return { success: false, message: 'Todas as notas devem estar entre 0 e 10.' }
+    }
+  }
+
+  let soma = 0
+  for (let i = 0; i < notas.length; i++) {
+    soma += notas[i]
+  }
+  const media = Number((soma / notas.length).toFixed(1))
 
   const registro = {
     id: Date.now(),
-    nome: novoCafe.nome.trim(),
-    produtor: novoCafe.produtor.trim(),
-    aroma: Number(novoCafe.aroma),
-    sabor: Number(novoCafe.sabor),
-    acidez: Number(novoCafe.acidez),
-    corpo: Number(novoCafe.corpo),
-    finalizacao: Number(novoCafe.finalizacao),
+    nome: nova.nome.trim(),
+    produtor: nova.produtor.trim(),
+    aroma: Number(nova.aroma),
+    sabor: Number(nova.sabor),
+    acidez: Number(nova.acidez),
+    corpo: Number(nova.corpo),
+    finalizacao: Number(nova.finalizacao),
     media,
-    observacoes: novoCafe.observacoes?.trim() || 'Sem observações.',
-    avaliador: novoCafe.avaliador?.trim() || 'Equipe Colmeia',
-    data: novoCafe.data || new Date().toLocaleDateString('pt-BR'),
+    observacoes: nova.observacoes || 'Sem observações.',
+    avaliador: nova.avaliador || 'Equipe Colmeia',
+    data: nova.data || new Date().toLocaleDateString('pt-BR'),
   }
 
   avaliacoes.value = [registro, ...avaliacoes.value]
-  persistirAvaliacoes()
+  salvarNoStorage()
 
   return { success: true, message: 'Avaliação cadastrada com sucesso!' }
 }

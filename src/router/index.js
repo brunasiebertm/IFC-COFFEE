@@ -13,7 +13,7 @@ const router = createRouter({
     { path: '/avaliar', redirect: { name: 'avaliacoes' } },
     { path: '/ranking', name: 'ranking', component: RankingView },
     { path: '/cafe/:id', name: 'detalhes', component: CafeDetailView },
-    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundView },
+    { path: '/:pathMatch(.*)*', name: 'notfound', component: NotFoundView },
   ],
 })
 

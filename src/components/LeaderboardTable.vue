@@ -10,25 +10,25 @@ defineProps({
 </script>
 
 <template>
-  <div class="leaderboard-card">
+  <div class="tabela-card">
     <table>
       <thead>
         <tr>
-          <th>Posição</th>
+          <th>#</th>
           <th>Café</th>
           <th>Produtor</th>
           <th>Nota</th>
-          <th>Ação</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(cafe, index) in cafes" :key="cafe.id" :class="{ topThree: index < 3 }">
-          <td>#{{ index + 1 }}</td>
+        <tr v-for="(cafe, i) in cafes" :key="cafe.id" :class="{ top3: i < 3 }">
+          <td>{{ i + 1 }}º</td>
           <td>{{ cafe.nome }}</td>
           <td>{{ cafe.produtor }}</td>
           <td>{{ cafe.media.toFixed(1) }}</td>
           <td>
-            <RouterLink :to="{ name: 'detalhes', params: { id: cafe.id } }">Detalhes</RouterLink>
+            <RouterLink :to="{ name: 'detalhes', params: { id: cafe.id } }">Ver</RouterLink>
           </td>
         </tr>
       </tbody>
@@ -37,36 +37,12 @@ defineProps({
 </template>
 
 <style scoped>
-.leaderboard-card {
-  background: white;
-  border: 1px solid rgba(111, 78, 55, 0.15);
-  border-radius: 24px;
-  padding: 1rem;
-  overflow-x: auto;
+.tabela-card {
+  background: white; border: 1px solid #dcc9b0; border-radius: 10px; padding: 0.8rem; overflow-x: auto;
 }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 0.75rem 0.6rem;
-  border-bottom: 1px solid #efe1c9;
-}
-
-th {
-  color: #6f4e37;
-}
-
-.topThree {
-  background: #fff8ee;
-}
-
-a {
-  color: #6f4e37;
-  font-weight: 700;
-}
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #efe1c9; font-size: 0.85rem; }
+th { color: #6f4e37; font-size: 0.8rem; }
+.top3 { background: #fff8ee; }
+a { color: #6f4e37; font-weight: 600; font-size: 0.85rem; }
 </style>
