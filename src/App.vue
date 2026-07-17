@@ -1,85 +1,102 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Coffee Quality Challenge 2026</p>
+        <h1>Squad Colmeia</h1>
+      </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
+      <nav class="main-nav" aria-label="Navegação principal">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/avaliacoes">Avaliações</RouterLink>
+        <RouterLink to="/ranking">Ranking</RouterLink>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <RouterView />
+    <main class="main-content">
+      <RouterView />
+    </main>
+
+    <footer class="footer">
+      <p>Projeto escolar para avaliação de cafés.</p>
+    </footer>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(111, 78, 55, 0.15);
+  backdrop-filter: blur(10px);
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: #7b5c47;
+}
+
+h1 {
+  margin: 0.25rem 0 0;
+  font-size: 1.4rem;
+  color: #2f2118;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: #4f3423;
+  font-weight: 600;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+}
+
+.main-nav a.router-link-active {
+  background: #6f4e37;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.footer {
+  padding: 1rem 1.5rem 1.5rem;
   text-align: center;
-  margin-top: 2rem;
+  color: #72543a;
+  font-size: 0.95rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+@media (max-width: 700px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+  .main-content {
+    padding: 1.25rem 1rem 2rem;
   }
 }
 </style>
